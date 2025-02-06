@@ -2,6 +2,7 @@
 
 require "sinatra"
 require "sinatra/reloader"
+require "dotenv/load"
 
 
 # Pull in the HTTP class
@@ -11,7 +12,7 @@ require "http"
 get("/") do
 
   # Assemble the API url, including the API key in the query string
-  api_url = "https://api.exchangerate.host/list?access_key=#{ENV.fetch(EXCHANGE_KEY)}"
+  api_url = "https://api.exchangerate.host/list?access_key=#{ENV.fetch('EXCHANGE_KEY')}"
 
   # Use HTTP.get to retrieve the API data
   @raw_response = HTTP.get(api_url)
@@ -35,7 +36,7 @@ end
 get("/:first_symbol") do
   @the_symbol=params.fetch("first_symbol").to_s
 
-  api_url = "https://api.exchangerate.host/list?access_key=#{ENV.fetch(EXCHANGE_KEY)}"
+  api_url = "https://api.exchangerate.host/list?access_key=#{ENV.fetch('EXCHANGE_KEY')}"
 
   # Use HTTP.get to retrieve the API data
   @raw_response = HTTP.get(api_url)
@@ -59,7 +60,7 @@ get("/:first_symbol/:second_symbol") do
   # Assemble the API url, including the API key in the query string
   @first_symbol=params.fetch("first_symbol").to_s
   @second_symbol=params.fetch("second_symbol").to_s
-  api_url = "https://api.exchangerate.host/convert?from=#{@first_symbol}&to=#{@second_symbol}&amount=1&access_key=#{ENV.fetch(EXCHANGE_KEY)}"
+  api_url = "https://api.exchangerate.host/convert?from=#{@first_symbol}&to=#{@second_symbol}&amount=1&access_key=#{ENV.fetch('EXCHANGE_KEY')}"
 
 
   # Use HTTP.get to retrieve the API data
